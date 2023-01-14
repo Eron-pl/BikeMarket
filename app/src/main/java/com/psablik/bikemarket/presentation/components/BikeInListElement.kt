@@ -20,7 +20,7 @@ fun BikeInListElement(
 ) {
     Surface(
         shape = RoundedCornerShape(MaterialTheme.spacing.xs),
-        shadowElevation = MaterialTheme.spacing.xxs
+        shadowElevation = MaterialTheme.spacing.xxxs
     ) {
         Column(
             modifier = modifier

@@ -1,24 +1,15 @@
 package com.psablik.bikemarket.presentation.home
 
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.psablik.bikemarket.presentation.components.BikeInListElement
+import com.psablik.bikemarket.presentation.components.BikeListColumn
 import com.psablik.bikemarket.presentation.ui.theme.B7
 import com.psablik.bikemarket.presentation.ui.theme.H2
 import com.psablik.bikemarket.presentation.ui.theme.spacing
@@ -57,32 +48,8 @@ fun HomeView() {
 
         Spacer(Modifier.height(MaterialTheme.spacing.m))
 
-        BikeList(state = bikeListState, bikeList = mockBikeList)
+        BikeListColumn(state = bikeListState, bikeList = mockBikeList)
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun BikeList(
-    state: LazyListState,
-    bikeList: List<BikeOnView>,
 
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        state = state,
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.m),
-        contentPadding = PaddingValues(all = MaterialTheme.spacing.m)
-    ) {
-        items(items = bikeList, key = { it.model }) { bike ->
-            BikeInListElement(
-                bikeModelName = bike.model,
-                modifier = Modifier.animateItemPlacement(
-                    animationSpec = tween(
-                        durationMillis = 500  // TODO: Extract const
-                    )
-                )
-            )
-        }
-    }
-}
