@@ -5,9 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,15 +59,18 @@ fun MainScreen() {
             shouldShowBackButton = shouldShowBackButton
         )
 
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.l))
+
         Navigation(
             modifier = Modifier
-                .weight(1f)
-                .padding(MaterialTheme.spacing.s),
+                .weight(1f),
             navController = navController
         )
 
-        BottomNavigationBar(
-            navController = navController
-        )
+        Surface(elevation = MaterialTheme.spacing.s) {
+            BottomNavigationBar(
+                navController = navController
+            )
+        }
     }
 }

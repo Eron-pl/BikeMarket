@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,46 +36,49 @@ fun TopBar(
     }
     backButtonVisibility = shouldShowBackButton
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                horizontal = MaterialTheme.spacing.m,
-                vertical = MaterialTheme.spacing.s
-            ),
-    ) {
-
-        AnimatedVisibility(
-            visible = backButtonVisibility,
-            enter = fadeIn(),
-            exit = fadeOut()
+    Surface(elevation = MaterialTheme.spacing.xs) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = MaterialTheme.spacing.m,
+                    vertical = MaterialTheme.spacing.xxxs
+                ),
         ) {
+
+            AnimatedVisibility(
+                visible = backButtonVisibility,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                IconButton(
+                    onClick = { navController.navigateUp() },
+                    modifier = Modifier.align(Alignment.CenterStart)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_back),
+                        contentDescription = null // Todo
+                    )
+                }
+            }
+
+            Text(
+                text = "BikeMarket",
+                style = B7,
+                color = Variant,
+                modifier = Modifier.align(Alignment.Center)
+            )
+
             IconButton(
-                onClick = { navController.navigateUp() },
-                modifier = Modifier.align(Alignment.CenterStart)
+                onClick = { navController.navigate(Screen.Settings.route) },
+                modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_back),
+                    painter = painterResource(id = R.drawable.ic_settings),
                     contentDescription = null // Todo
                 )
             }
         }
-
-        Text(
-            text = "BikeMarket",
-            style = B7,
-            color = Variant,
-            modifier = Modifier.align(Alignment.Center)
-        )
-
-        IconButton(
-            onClick = { navController.navigate(Screen.Settings.route) },
-            modifier = Modifier.align(Alignment.CenterEnd)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_settings),
-                contentDescription = null // Todo
-            )
-        }
     }
 }
+

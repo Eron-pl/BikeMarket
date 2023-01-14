@@ -27,7 +27,7 @@ fun BottomNavigationBar(
     )
 
     BottomNavigation(
-        backgroundColor = Color.Transparent,
+        backgroundColor = Color.White,
         elevation = 0.dp
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
