@@ -1,5 +1,6 @@
 package com.psablik.bikemarket.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -8,7 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.psablik.bikemarket.navigation.Screen
@@ -18,13 +21,15 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-
     val screenList = listOf(
         Screen.Home,
         Screen.Orders,
     )
 
-    BottomNavigation() {
+    BottomNavigation(
+        backgroundColor = Color.Transparent,
+        elevation = 0.dp
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
@@ -34,7 +39,7 @@ fun BottomNavigationBar(
                 BottomNavigationItem(
                     selected = isSelected,
                     onClick = { navController.navigate(screen.route) },
-                    selectedContentColor = MaterialTheme.colors.primary,
+                    selectedContentColor = Color.Red, // Todo: check why material theme not working
                     icon = {
                         Icon(
                             painter = painterResource(id = screen.iconId!!),
