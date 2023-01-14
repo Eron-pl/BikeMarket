@@ -5,7 +5,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import com.psablik.bikemarket.presentation.ui.theme.LocalSpacing
+import com.psablik.bikemarket.presentation.ui.theme.Spacing
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color.Red,
@@ -44,9 +47,11 @@ fun BikeMarketTheme(
         LightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colors,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(LocalSpacing provides Spacing()) {
+        MaterialTheme(
+            colorScheme = colors,
+            typography = Typography,
+            content = content
+        )
+    }
 }
