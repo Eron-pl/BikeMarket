@@ -55,6 +55,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    // DataStore
+    implementation "androidx.datastore:datastore-core:$datastore_version"
+
     // Core
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
