@@ -3,8 +3,11 @@ package com.psablik.bikemarket.di
 import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.psablik.bikemarket.infrastructure.local.LocalAuthenticationDataSource
 import com.psablik.bikemarket.infrastructure.remote.RemoteAuthenticationDataSource
+import com.psablik.bikemarket.infrastructure.remote.RemoteUserDataSource
+import com.psablik.bikemarket.mapper.domain.UserMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +35,18 @@ object DataSourceModule {
     ): RemoteAuthenticationDataSource = RemoteAuthenticationDataSource(
         firebaseAuth = firebaseAuth,
         googleSignInClient = googleSignInClient
+    )
+
+    @Provides
+    @Singleton
+    fun remoteUserDataSource(
+        firebaseAuth: FirebaseAuth,
+        userMapper: UserMapper,
+        firestore: FirebaseFirestore
+    ): RemoteUserDataSource = RemoteUserDataSource(
+        firebaseAuth = firebaseAuth,
+        userMapper = userMapper,
+        firestore = firestore
     )
 
 }

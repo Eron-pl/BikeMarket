@@ -33,5 +33,4 @@ class RemoteAuthenticationDataSource @Inject constructor(
         }
     }
 
-    fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 }

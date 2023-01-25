@@ -11,6 +11,9 @@ import com.google.firebase.auth.AuthCredential
 import com.psablik.bikemarket.domain.model.LoggedStatus
 import com.psablik.bikemarket.domain.usecase.GetCredentialFromAccountUseCase
 import com.psablik.bikemarket.domain.usecase.GetLoggedInStatusUseCase
+import com.psablik.bikemarket.domain.usecase.GetUserTypeUseCase
+import com.psablik.bikemarket.domain.usecase.IsUserRegisteredUseCase
+import com.psablik.bikemarket.domain.usecase.RegisterUserUseCase
 import com.psablik.bikemarket.domain.usecase.SetLoggedInStatusUseCase
 import com.psablik.bikemarket.domain.usecase.SignInWithCredentialUseCase
 import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
@@ -29,7 +32,10 @@ class LoginViewModel @Inject constructor(
     private val signInWithCredential: SignInWithCredentialUseCase,
     private val getLoggedInStatus: GetLoggedInStatusUseCase,
     private val setLoggedStatus: SetLoggedInStatusUseCase,
-    private val loggedStatusMapper: LoggedStatusMapper
+    private val loggedStatusMapper: LoggedStatusMapper,
+    private val getUserType: GetUserTypeUseCase,
+    private val isUserRegistered: IsUserRegisteredUseCase,
+    private val registerUser: RegisterUserUseCase
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<LoginEvent>()
@@ -60,6 +66,15 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 if(signInWithCredential(credential = credential).isSuccess) {
+
+                    if(isUserRegistered().not()) {
+                        registerUser()
+                    }
+
+                    val type = getUserType()
+
+                    Timber.e("USER TYPE: ${type.toString()}")
+
                     setLoggedStatus(LoggedStatus.LOGGED_IN)
                     _event.emit(
                         LoginEvent.LoggedIn
