@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.psablik.bikemarket.navigation.Navigation
 import com.psablik.bikemarket.navigation.Screen
+import com.psablik.bikemarket.navigation.isNotInScreen
 import com.psablik.bikemarket.presentation.components.BottomNavigationBar
 import com.psablik.bikemarket.presentation.components.TopBar
 import com.psablik.bikemarket.presentation.ui.theme.spacing
@@ -46,18 +47,26 @@ fun MainScreen() {
         mutableStateOf(currentDestination == Screen.Settings.route)
     }
 
+    var shouldShowBottomNavAndTopBar by remember {
+        mutableStateOf(currentDestination != Screen.Login.route)
+    }
+
     navController.addOnDestinationChangedListener() { _, destination, _ ->
         shouldShowBackButton =
             destination.route == Screen.Settings.route // Todo: Pass to VM -> state -> UI
+        shouldShowBottomNavAndTopBar =
+            destination.route != Screen.Login.route
     }
 
     Column(
         Modifier.fillMaxSize()
     ) {
-        TopBar(
-            navController = navController,
-            shouldShowBackButton = shouldShowBackButton
-        )
+        if (shouldShowBottomNavAndTopBar) {
+            TopBar(
+                navController = navController,
+                shouldShowBackButton = shouldShowBackButton
+            )
+        }
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.l))
 
@@ -67,10 +76,14 @@ fun MainScreen() {
             navController = navController
         )
 
-        Surface(elevation = MaterialTheme.spacing.s) {
-            BottomNavigationBar(
-                navController = navController
-            )
+        if (shouldShowBottomNavAndTopBar) {
+            Surface(elevation = MaterialTheme.spacing.s) {
+                BottomNavigationBar(
+                    navController = navController
+                )
+            }
         }
     }
 }
+
+
