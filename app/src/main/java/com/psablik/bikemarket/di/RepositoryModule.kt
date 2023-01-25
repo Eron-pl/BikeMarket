@@ -1,6 +1,7 @@
 package com.psablik.bikemarket.di
 
 import com.psablik.bikemarket.infrastructure.local.LocalAuthenticationDataSource
+import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
 import com.psablik.bikemarket.repository.AuthenticationRepository
 import com.psablik.bikemarket.repository.RealAuthenticationRepository
 import dagger.Module
@@ -11,14 +12,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RepositoryModule {
+object RepositoryModule {
 
     @Provides
     @Singleton
     fun localAuthRepository(
-        localDataSource: LocalAuthenticationDataSource
+        localDataSource: LocalAuthenticationDataSource,
+        loggedStatusMapper: LoggedStatusMapper
     ): AuthenticationRepository = RealAuthenticationRepository(
-        localDataSource
+        localDataSource = localDataSource,
+        loggedStatusMapper = loggedStatusMapper
     )
 
 }

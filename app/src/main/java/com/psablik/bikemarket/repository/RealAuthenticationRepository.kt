@@ -1,11 +1,14 @@
 package com.psablik.bikemarket.repository
 
+import com.psablik.bikemarket.domain.model.LoggedStatus
 import com.psablik.bikemarket.infrastructure.local.LocalAuthenticationDataSource
+import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class RealAuthenticationRepository @Inject constructor(
-    private val localDataSource: LocalAuthenticationDataSource
+    private val localDataSource: LocalAuthenticationDataSource,
+    private val loggedStatusMapper: LoggedStatusMapper
 ) : AuthenticationRepository {
 
     companion object {
@@ -19,8 +22,8 @@ class RealAuthenticationRepository @Inject constructor(
         localDataSource.clearLoggedStatus()
     }
 
-    override suspend fun setLoggedInStatus(status: Boolean) {
-        localDataSource.setLoggedStatus(status)
+    override suspend fun setLoggedInStatus(status: LoggedStatus) {
+        localDataSource.setLoggedStatus(loggedStatusMapper(status))
     }
 
 }
