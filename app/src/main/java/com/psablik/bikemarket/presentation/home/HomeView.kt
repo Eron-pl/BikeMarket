@@ -30,21 +30,7 @@ fun HomeView() {
 
         val bikeListState = rememberLazyListState()
 
-        Text(
-            text = "Our bikes", // Todo: Strings
-            style = H2,
-            color = Variant,
-            modifier = Modifier.padding(start = MaterialTheme.spacing.m)
-        )
-
-        Spacer(Modifier.height(MaterialTheme.spacing.xs))
-
-        Text(
-            text = "Choose one that suits you best", // Todo: Strings
-            style = B7,
-            color = Variant,
-            modifier = Modifier.padding(start = MaterialTheme.spacing.m)
-        )
+        TitleSection()
 
         Spacer(Modifier.height(MaterialTheme.spacing.m))
 
@@ -52,4 +38,21 @@ fun HomeView() {
     }
 }
 
+@Composable
+fun TitleSection() {
+    Text(
+        text = "Our bikes", // Todo: Strings
+        style = H2,
+        color = Variant,
+        modifier = Modifier.padding(start = MaterialTheme.spacing.m)
+    )
 
+    Spacer(Modifier.height(MaterialTheme.spacing.xs))
+
+    Text(
+        text = "Choose one that suits you best", // Todo: Strings
+        style = B7,
+        color = Variant,
+        modifier = Modifier.padding(start = MaterialTheme.spacing.m)
+    )
+}

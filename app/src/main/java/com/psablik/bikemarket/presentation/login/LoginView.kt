@@ -1,5 +1,7 @@
 package com.psablik.bikemarket.presentation.login
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,32 +11,50 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.psablik.bikemarket.R
 import com.psablik.bikemarket.navigation.Screen
-import com.psablik.bikemarket.navigation.isNotInScreen
 import com.psablik.bikemarket.presentation.components.BaseButton
-import com.psablik.bikemarket.presentation.ui.theme.B1
 import com.psablik.bikemarket.presentation.ui.theme.B3
 import com.psablik.bikemarket.presentation.ui.theme.B7
 import com.psablik.bikemarket.presentation.ui.theme.H1
 import com.psablik.bikemarket.presentation.ui.theme.spacing
+import com.psablik.bikemarket.utils.LaunchOnce
 
 @Composable
 fun LoginView(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(LaunchOnce) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is LoginEvent.LoggedIn -> navController.navigate(Screen.Home.route)
+            }
+        }
+    }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        with(viewModel) {
+            getCredentialsFromActivityResult(result = result)?.let { credential ->
+                signIn(credential)
+            }
+        }
+    }
 
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
@@ -43,6 +63,8 @@ fun LoginView(
             horizontal = MaterialTheme.spacing.m
         )
     ) {
+
+        Spacer(Modifier.height(MaterialTheme.spacing.s))
 
         Column {
 
@@ -69,7 +91,13 @@ fun LoginView(
             contentDescription = null
         )
 
-        SignInButton(onClick = { })
+        SignInButton(onClick = {
+            with(viewModel) {
+                getGoogleSingInIntent().let { intent ->
+                    launcher.launch(intent)
+                }
+            }
+        })
     }
 
 }

@@ -14,9 +14,3 @@ sealed class Screen(
     object Settings : Screen(route = "route_settings")
     object Home : Screen(route = "route_home")
 }
-
-fun isNotInScreen(
-    navController: NavController,
-    screen: Screen
-): Boolean =
-    navController.currentBackStackEntry?.destination?.route != screen.route

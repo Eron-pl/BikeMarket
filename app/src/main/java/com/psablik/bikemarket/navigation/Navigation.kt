@@ -51,7 +51,7 @@ fun Navigation(
         composable(
             route = Screen.Login.route
         ) {
-            LoginView()
+            LoginView(navController = navController)
         }
 
         // Splash
@@ -72,7 +72,7 @@ fun Navigation(
         composable(
             route = Screen.Settings.route
         ) {
-            SettingsView()
+            SettingsView(navController = navController)
         }
     }
 }
