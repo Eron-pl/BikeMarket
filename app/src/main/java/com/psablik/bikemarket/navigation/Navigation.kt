@@ -8,6 +8,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.psablik.bikemarket.R
 import com.psablik.bikemarket.presentation.home.HomeView
+import com.psablik.bikemarket.presentation.login.LoginView
 import com.psablik.bikemarket.presentation.orders.OrdersView
 import com.psablik.bikemarket.presentation.settings.SettingsView
 import com.psablik.bikemarket.presentation.splash.SplashView
@@ -36,7 +37,7 @@ fun Navigation(
 
     AnimatedNavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.Login.route,
         modifier = modifier
     ) {
         // Home
@@ -44,6 +45,13 @@ fun Navigation(
             route = Screen.Home.route
         ) {
             HomeView()
+        }
+
+        // Login
+        composable(
+            route = Screen.Login.route
+        ) {
+            LoginView(navController = navController)
         }
 
         // Splash
@@ -64,7 +72,7 @@ fun Navigation(
         composable(
             route = Screen.Settings.route
         ) {
-            SettingsView()
+            SettingsView(navController = navController)
         }
     }
 }

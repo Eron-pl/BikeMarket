@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -24,7 +23,9 @@ import com.psablik.bikemarket.presentation.components.BottomNavigationBar
 import com.psablik.bikemarket.presentation.components.TopBar
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.BikeMarketTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,18 +47,26 @@ fun MainScreen() {
         mutableStateOf(currentDestination == Screen.Settings.route)
     }
 
+    var shouldShowBottomNavAndTopBar by remember { // Todo: Export to state
+        mutableStateOf(currentDestination != Screen.Login.route)
+    }
+
     navController.addOnDestinationChangedListener() { _, destination, _ ->
         shouldShowBackButton =
             destination.route == Screen.Settings.route // Todo: Pass to VM -> state -> UI
+        shouldShowBottomNavAndTopBar =
+            destination.route != Screen.Login.route
     }
 
     Column(
         Modifier.fillMaxSize()
     ) {
-        TopBar(
-            navController = navController,
-            shouldShowBackButton = shouldShowBackButton
-        )
+        if (shouldShowBottomNavAndTopBar) {
+            TopBar(
+                navController = navController,
+                shouldShowBackButton = shouldShowBackButton
+            )
+        }
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.l))
 
@@ -67,10 +76,12 @@ fun MainScreen() {
             navController = navController
         )
 
-        Surface(elevation = MaterialTheme.spacing.s) {
-            BottomNavigationBar(
-                navController = navController
-            )
+        if (shouldShowBottomNavAndTopBar) {
+            Surface(elevation = MaterialTheme.spacing.s) {
+                BottomNavigationBar(
+                    navController = navController
+                )
+            }
         }
     }
 }

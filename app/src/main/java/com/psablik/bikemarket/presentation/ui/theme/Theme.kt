@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
-private val colorSchema: ColorScheme = ColorScheme(
+private val colorSchem: ColorScheme = ColorScheme(
     primary = Color.Red,
     onPrimary = Color.Red,
     onPrimaryContainer = Color.Red,
@@ -45,7 +45,7 @@ fun BikeMarketTheme(
 ) {
     CompositionLocalProvider(LocalSpacing provides Spacing()) {
         MaterialTheme(
-            colorScheme = colorScheme,
+            colorScheme = colorSchem,
             typography = Typography,
             content = content
         )
