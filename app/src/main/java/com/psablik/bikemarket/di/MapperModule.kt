@@ -1,5 +1,6 @@
 package com.psablik.bikemarket.di
 
+import com.psablik.bikemarket.mapper.domain.BikeMapper
 import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
 import com.psablik.bikemarket.mapper.domain.UserMapper
 import dagger.Module
@@ -19,5 +20,9 @@ object MapperModule {
     @Provides
     @Reusable
     fun userMapper(): UserMapper = UserMapper()
+
+    @Provides
+    @Reusable
+    fun bikeMapper(): BikeMapper = BikeMapper()
 
 }

@@ -5,6 +5,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.psablik.bikemarket.R
 import dagger.Module
 import dagger.Provides
@@ -19,11 +20,16 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+    fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
     @Singleton
-    fun provideGoogleSignInOptions(
+    fun firestore(): FirebaseFirestore =
+        FirebaseFirestore.getInstance()
+
+    @Provides
+    @Singleton
+    fun googleSignInOptions(
         @ApplicationContext context: Context
     ): GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(context.getString(R.string.default_web_client_id))
@@ -32,7 +38,7 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideGoogleSignInClient(
+    fun googleSignInClient(
         @ApplicationContext context: Context,
         googleSignInOptions: GoogleSignInOptions
     ): GoogleSignInClient {
