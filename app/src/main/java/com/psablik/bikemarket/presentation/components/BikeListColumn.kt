@@ -30,6 +30,7 @@ fun BikeListColumn(
         items(items = bikeList, key = { it.name }) { bike ->
             BikeInListElement(
                 bikeModelName = bike.name,
+                bikeImgPath = bike.imgPath,
                 modifier = Modifier.animateItemPlacement(
                     animationSpec = tween(
                         durationMillis = 500  // TODO: Extract const

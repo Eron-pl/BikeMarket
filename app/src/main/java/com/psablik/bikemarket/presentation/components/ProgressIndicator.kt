@@ -6,5 +6,5 @@ import com.psablik.bikemarket.ui.theme.Primary
 
 @Composable
 fun ProgressIndicator() {
-    CircularProgressIndicator(color = Primary,)
+    CircularProgressIndicator(color = Primary)
 }

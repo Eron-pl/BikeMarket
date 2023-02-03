@@ -7,17 +7,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.psablik.bikemarket.domain.model.Bike
 import com.psablik.bikemarket.presentation.components.BikeListColumn
 import com.psablik.bikemarket.presentation.components.ProgressIndicator
-import com.psablik.bikemarket.presentation.ui.theme.B7
+import com.psablik.bikemarket.presentation.ui.theme.B5
 import com.psablik.bikemarket.presentation.ui.theme.H2
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Variant
@@ -29,7 +27,6 @@ fun HomeView(
     val state = viewModel.state
 
     Column(modifier = Modifier.fillMaxWidth()) {
-
         val bikeListState = rememberLazyListState()
 
         TitleSection()
@@ -65,7 +62,7 @@ fun TitleSection() {
 
     Text(
         text = "Choose one that suits you best", // Todo: Strings
-        style = B7,
+        style = B5,
         color = Variant,
         modifier = Modifier.padding(start = MaterialTheme.spacing.m)
     )

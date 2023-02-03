@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import com.psablik.bikemarket.navigation.Screen
 import com.psablik.bikemarket.presentation.components.BottomNavigationBar
 import com.psablik.bikemarket.presentation.components.TopBar
 import com.psablik.bikemarket.presentation.ui.theme.spacing
+import com.psablik.bikemarket.ui.theme.Background
 import com.psablik.bikemarket.ui.theme.BikeMarketTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -59,7 +61,9 @@ fun MainScreen() {
     }
 
     Column(
-        Modifier.fillMaxSize()
+        Modifier
+            .fillMaxSize()
+            .background(color = Background)
     ) {
         if (shouldShowBottomNavAndTopBar) {
             TopBar(

@@ -26,8 +26,7 @@ import androidx.navigation.NavController
 import com.psablik.bikemarket.R
 import com.psablik.bikemarket.navigation.Screen
 import com.psablik.bikemarket.presentation.components.BaseButton
-import com.psablik.bikemarket.presentation.ui.theme.B3
-import com.psablik.bikemarket.presentation.ui.theme.B7
+import com.psablik.bikemarket.presentation.ui.theme.B5
 import com.psablik.bikemarket.presentation.ui.theme.H1
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.utils.LaunchOnce
@@ -78,7 +77,7 @@ fun LoginView(
 
             Text(
                 text = stringResource(id = R.string.login_title_description),
-                style = B7
+                style = B5
             )
         }
 
@@ -123,7 +122,7 @@ fun SignInButton(
         Text(
             text = stringResource(id = R.string.login_sign_in_with_google_button),
             textAlign = TextAlign.Center,
-            style = B3,
+            style = B5,
             color = MaterialTheme.colors.onBackground
         )
     }
