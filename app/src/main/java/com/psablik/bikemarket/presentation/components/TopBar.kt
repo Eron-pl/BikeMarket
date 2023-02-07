@@ -70,7 +70,13 @@ fun TopBar(
             )
 
             IconButton(
-                onClick = { navController.navigate(Screen.Settings.route) },
+                onClick = { navController.navigate(Screen.Settings.route) {
+                    popUpTo(Screen.Home.route) {
+                        saveState
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }  },
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Icon(

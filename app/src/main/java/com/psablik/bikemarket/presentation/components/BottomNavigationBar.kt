@@ -34,7 +34,13 @@ fun BottomNavigationBar(
             if (screen.iconId != null && screen.title != null) {
                 BottomNavigationItem(
                     selected = isSelected,
-                    onClick = { navController.navigate(screen.route) },
+                    onClick = { navController.navigate(screen.route) {
+                        popUpTo(Screen.Home.route) {
+                            saveState
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    } },
                     selectedContentColor = Color.Red, // Todo: check why material theme not working
                     icon = {
                         Icon(
