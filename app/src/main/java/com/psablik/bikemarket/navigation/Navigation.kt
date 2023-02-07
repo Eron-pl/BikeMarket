@@ -37,7 +37,7 @@ fun Navigation(
 
     AnimatedNavHost(
         navController = navController,
-        startDestination = startDestination(),
+        startDestination = Screen.Login.route,
         modifier = modifier
     ) {
         // Home
@@ -77,10 +77,10 @@ fun Navigation(
     }
 }
 
-fun startDestination(): String {
-    if(userIsLooggedIn()) {
-        //TODO
-    } else {
-        Screen.Login.route
-    }
-}
+//fun startDestination(): String {
+//    if(userIsLooggedIn()) {
+//        //TODO
+//    } else {
+//        Screen.Login.route
+//    }
+//}

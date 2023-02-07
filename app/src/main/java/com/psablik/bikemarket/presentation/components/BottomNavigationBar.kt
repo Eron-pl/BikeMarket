@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.psablik.bikemarket.navigation.Screen
 
@@ -35,7 +36,7 @@ fun BottomNavigationBar(
                 BottomNavigationItem(
                     selected = isSelected,
                     onClick = { navController.navigate(screen.route) {
-                        popUpTo(Screen.Home.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
                             saveState
                         }
                         launchSingleTop = true

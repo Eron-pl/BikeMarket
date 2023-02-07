@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(IO) {
             val bikes = getBikes()
 
-            delay(2000L)
+            delay(2000L) // Todo
 
             withContext(Main) {
                 state = try {
