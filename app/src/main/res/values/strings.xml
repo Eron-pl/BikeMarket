@@ -1,9 +1,9 @@
 <resources>
+    <!-- App -->
     <string name="app_name">BikeMarket</string>
 
     <!-- Login -->
-    <string name="login_title_description">Witamy w naszej aplikacji, zaloguj się i przeglądaj najlepsze rowery na rynku</string>
-    <string name="login_sign_in_button_description">Przycisk do zalogowania się przez Google</string>
-    <string name="login_sign_in_with_google_button">Zaloguj przez Google</string>
-
+    <string name="login_title_description">Welcome to our app, log in and browse the best bikes on the market</string>
+    <string name="login_sign_in_button_description">Button to log in into app with Google authentication</string>
+    <string name="login_sign_in_with_google_button">Log in with Google</string>
 </resources>

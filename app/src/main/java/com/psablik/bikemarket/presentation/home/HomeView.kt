@@ -14,8 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.navArgument
-import com.psablik.bikemarket.navigation.Screen
 import com.psablik.bikemarket.presentation.components.BikeListColumn
 import com.psablik.bikemarket.presentation.components.ProgressIndicator
 import com.psablik.bikemarket.presentation.ui.theme.B5
@@ -32,6 +30,8 @@ fun HomeView(
 
     Column(modifier = Modifier.fillMaxWidth()) {
         val bikeListState = rememberLazyListState()
+
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.m))
 
         TitleSection()
 
