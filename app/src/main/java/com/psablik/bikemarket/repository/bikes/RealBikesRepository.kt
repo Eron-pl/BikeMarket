@@ -11,4 +11,7 @@ class RealBikesRepository @Inject constructor(
 ) : BikesRepository {
     override suspend fun getBikes(): List<Bike> =
         firestoreDataSource.getBikes().map { bikeMapper(it) }
+
+    override suspend fun getBike(id: String): Bike =
+        bikeMapper(firestoreDataSource.getBike(id))
 }

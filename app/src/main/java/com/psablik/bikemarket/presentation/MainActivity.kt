@@ -6,9 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -53,9 +51,10 @@ fun MainScreen() {
         mutableStateOf(currentDestination != Screen.Login.route)
     }
 
-    navController.addOnDestinationChangedListener() { _, destination, _ ->
+    navController.addOnDestinationChangedListener { _, destination, _ ->
         shouldShowBackButton =
-            destination.route == Screen.Settings.route // Todo: Pass to VM -> state -> UI
+            destination.route == Screen.Settings.route ||
+                    destination.route == Screen.Product.route // Todo: Pass to VM -> state -> UI
         shouldShowBottomNavAndTopBar =
             destination.route != Screen.Login.route
     }
@@ -71,8 +70,6 @@ fun MainScreen() {
                 shouldShowBackButton = shouldShowBackButton
             )
         }
-
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.l))
 
         Navigation(
             modifier = Modifier

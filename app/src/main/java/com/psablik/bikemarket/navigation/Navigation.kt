@@ -4,12 +4,14 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.psablik.bikemarket.R
 import com.psablik.bikemarket.presentation.home.HomeView
 import com.psablik.bikemarket.presentation.login.LoginView
 import com.psablik.bikemarket.presentation.orders.OrdersView
+import com.psablik.bikemarket.presentation.product.ProductView
 import com.psablik.bikemarket.presentation.settings.SettingsView
 import com.psablik.bikemarket.presentation.splash.SplashView
 
@@ -44,7 +46,7 @@ fun Navigation(
         composable(
             route = Screen.Home.route
         ) {
-            HomeView()
+            HomeView(navController = navController)
         }
 
         // Login
@@ -74,13 +76,18 @@ fun Navigation(
         ) {
             SettingsView(navController = navController)
         }
+
+        // Product
+        composable(
+            route = Screen.Product.route,
+            arguments = Screen.Product.arguments ?: emptyList()
+        ) { navBackStackEntry ->
+            val productId = navBackStackEntry.arguments?.getString("productId")
+            productId?.let {
+                ProductView(productId = it)
+            }
+        }
     }
 }
 
-//fun startDestination(): String {
-//    if(userIsLooggedIn()) {
-//        //TODO
-//    } else {
-//        Screen.Login.route
-//    }
-//}
+

@@ -15,12 +15,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.psablik.bikemarket.navigation.Screen
 import com.psablik.bikemarket.presentation.components.BaseButton
-import com.psablik.bikemarket.presentation.ui.theme.B1
+import com.psablik.bikemarket.presentation.ui.theme.B4
 import com.psablik.bikemarket.presentation.ui.theme.H2
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Variant
 import com.psablik.bikemarket.utils.LaunchOnce
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun SettingsView(
@@ -37,6 +36,8 @@ fun SettingsView(
     }
 
     Column(verticalArrangement = Arrangement.SpaceBetween) {
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.m))
+
         TitleSection()
 
         LogoutButton(onClick = { viewModel.logOut() })
@@ -64,6 +65,6 @@ fun LogoutButton(onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(MaterialTheme.spacing.m)
     ) {
-        Text(text = "Log out", style = B1) // Todo: String
+        Text(text = "Log out", style = B4) // Todo: String
     }
 }

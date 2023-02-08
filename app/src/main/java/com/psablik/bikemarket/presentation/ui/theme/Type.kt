@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
@@ -140,7 +139,7 @@ fun TextColumn(
 ) {
     Column(
         modifier
-            .border(BorderStroke(MaterialTheme.spacing.l, Color.Black))
+            .border(BorderStroke(1.dp, Color.Black))
             .padding(5.dp)
     ) {
         Text(text = text, style = style)
