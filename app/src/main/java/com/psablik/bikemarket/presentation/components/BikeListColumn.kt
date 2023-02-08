@@ -11,14 +11,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.psablik.bikemarket.presentation.home.BikeOnView
+import com.psablik.bikemarket.domain.model.Bike
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BikeListColumn(
     state: LazyListState,
-    bikeList: List<BikeOnView>,
+    bikeList: List<Bike>,
 
     ) {
     LazyColumn(
@@ -27,9 +27,10 @@ fun BikeListColumn(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.m),
         contentPadding = PaddingValues(all = MaterialTheme.spacing.m)
     ) {
-        items(items = bikeList, key = { it.model }) { bike ->
+        items(items = bikeList, key = { it.name }) { bike ->
             BikeInListElement(
-                bikeModelName = bike.model,
+                bikeModelName = bike.name,
+                bikeImgPath = bike.imgPath,
                 modifier = Modifier.animateItemPlacement(
                     animationSpec = tween(
                         durationMillis = 500  // TODO: Extract const

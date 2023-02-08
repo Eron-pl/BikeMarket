@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.psablik.bikemarket.R
 import com.psablik.bikemarket.navigation.Screen
-import com.psablik.bikemarket.presentation.ui.theme.B7
+import com.psablik.bikemarket.presentation.ui.theme.B5
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Variant
 
@@ -64,13 +64,19 @@ fun TopBar(
 
             Text(
                 text = "BikeMarket",
-                style = B7,
+                style = B5,
                 color = Variant,
                 modifier = Modifier.align(Alignment.Center)
             )
 
             IconButton(
-                onClick = { navController.navigate(Screen.Settings.route) },
+                onClick = { navController.navigate(Screen.Settings.route) {
+                    popUpTo(Screen.Home.route) {
+                        saveState
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }  },
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Icon(

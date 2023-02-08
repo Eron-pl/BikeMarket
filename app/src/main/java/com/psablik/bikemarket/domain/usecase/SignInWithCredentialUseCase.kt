@@ -1,7 +1,7 @@
 package com.psablik.bikemarket.domain.usecase
 
 import com.google.firebase.auth.AuthCredential
-import com.psablik.bikemarket.repository.AuthenticationRepository
+import com.psablik.bikemarket.repository.authentication.AuthenticationRepository
 import javax.inject.Inject
 
 class SignInWithCredentialUseCase @Inject constructor(

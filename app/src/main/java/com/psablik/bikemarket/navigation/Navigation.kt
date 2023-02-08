@@ -76,3 +76,11 @@ fun Navigation(
         }
     }
 }
+
+//fun startDestination(): String {
+//    if(userIsLooggedIn()) {
+//        //TODO
+//    } else {
+//        Screen.Login.route
+//    }
+//}

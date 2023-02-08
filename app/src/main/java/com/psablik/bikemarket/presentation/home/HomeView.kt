@@ -1,40 +1,51 @@
 package com.psablik.bikemarket.presentation.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.psablik.bikemarket.presentation.components.BikeListColumn
-import com.psablik.bikemarket.presentation.ui.theme.B7
+import com.psablik.bikemarket.presentation.components.ProgressIndicator
+import com.psablik.bikemarket.presentation.ui.theme.B5
 import com.psablik.bikemarket.presentation.ui.theme.H2
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Variant
 
 @Composable
-fun HomeView() {
-    Column {
+fun HomeView(
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    val state = viewModel.state
 
-        val mockBikeList = listOf(  // Todo: Get from VM
-            BikeOnView("Bike 1"),
-            BikeOnView("Bike 2"),
-            BikeOnView("Bike 3"),
-            BikeOnView("Bike 4"),
-            BikeOnView("Bike 5"),
-            BikeOnView("Bike 6")
-        )
-
+    Column(modifier = Modifier.fillMaxWidth()) {
         val bikeListState = rememberLazyListState()
 
         TitleSection()
 
         Spacer(Modifier.height(MaterialTheme.spacing.m))
 
-        BikeListColumn(state = bikeListState, bikeList = mockBikeList)
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            if (state is HomeViewState.Loading) {
+                ProgressIndicator()
+            }
+
+            if (state is HomeViewState.Loaded) {
+                BikeListColumn(state = bikeListState, bikeList = state.bikes)
+            }
+        }
     }
 }
 
@@ -51,7 +62,7 @@ fun TitleSection() {
 
     Text(
         text = "Choose one that suits you best", // Todo: Strings
-        style = B7,
+        style = B5,
         color = Variant,
         modifier = Modifier.padding(start = MaterialTheme.spacing.m)
     )

@@ -83,24 +83,6 @@ val B5 = TextStyle(
     lineHeight = 24.sp
 )
 
-val B6 = TextStyle(
-    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-    fontSize = 14.sp,
-    lineHeight = 24.sp
-)
-
-val B7 = TextStyle(
-    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
-    fontSize = 14.sp,
-    lineHeight = 24.sp
-)
-
-val B8 = TextStyle(
-    fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-    fontSize = 14.sp,
-    lineHeight = 24.sp
-)
-
 val Info = TextStyle(
     fontFamily = FontFamily(Font(R.font.montserrat_medium)),
     fontSize = 12.sp,
@@ -141,11 +123,6 @@ fun TextStylesPreview() {
             TextColumn(text = "B3 text", style = B3, modifier = Modifier.weight(1f))
             TextColumn(text = "B4 text", style = B4, modifier = Modifier.weight(1f))
             TextColumn(text = "B5 text", style = B5, modifier = Modifier.weight(1f))
-        }
-        Row {
-            TextColumn(text = "B6 text", style = B6, modifier = Modifier.weight(1f))
-            TextColumn(text = "B7 text", style = B7, modifier = Modifier.weight(1f))
-            TextColumn(text = "B8 text", style = B8, modifier = Modifier.weight(1f))
         }
         Row {
             TextColumn(text = "Info text", style = Info, modifier = Modifier.weight(1f))

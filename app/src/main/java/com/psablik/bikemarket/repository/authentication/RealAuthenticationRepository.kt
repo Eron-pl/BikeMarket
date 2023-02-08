@@ -1,4 +1,4 @@
-package com.psablik.bikemarket.repository
+package com.psablik.bikemarket.repository.authentication
 
 import com.google.firebase.auth.AuthCredential
 import com.psablik.bikemarket.domain.model.LoggedStatus
