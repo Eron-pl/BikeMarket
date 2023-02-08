@@ -13,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.navArgument
+import com.psablik.bikemarket.navigation.Screen
 import com.psablik.bikemarket.presentation.components.BikeListColumn
 import com.psablik.bikemarket.presentation.components.ProgressIndicator
 import com.psablik.bikemarket.presentation.ui.theme.B5
@@ -22,7 +25,8 @@ import com.psablik.bikemarket.ui.theme.Variant
 
 @Composable
 fun HomeView(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val state = viewModel.state
 
@@ -43,7 +47,13 @@ fun HomeView(
             }
 
             if (state is HomeViewState.Loaded) {
-                BikeListColumn(state = bikeListState, bikeList = state.bikes)
+                BikeListColumn(
+                    state = bikeListState,
+                    bikeList = state.bikes,
+                    onClick = { id ->
+                        viewModel.navigateToProduct(id = id, navController = navController)
+                    }
+                )
             }
         }
     }
@@ -67,3 +77,5 @@ fun TitleSection() {
         modifier = Modifier.padding(start = MaterialTheme.spacing.m)
     )
 }
+
+

@@ -2,6 +2,7 @@ package com.psablik.bikemarket.di
 
 import android.content.Context
 import android.content.res.Resources
+import androidx.navigation.NavHostController
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,8 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun resources(@ApplicationContext context: Context): Resources =
-        context.resources
+    fun resources(
+        @ApplicationContext context: Context
+    ): Resources = context.resources
 
 }

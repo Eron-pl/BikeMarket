@@ -5,7 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.psablik.bikemarket.domain.usecase.GetBikeListUseCase
+import com.psablik.bikemarket.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -42,6 +45,16 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun navigateToProduct(navController: NavController, id: String) {
+        navController.navigate(
+            route = Screen.Product.route
+                .replace(
+                    oldValue = Screen.PRODUCT_ID_ARG_KEY,
+                    newValue = id
+                )
+        )
     }
 
 }

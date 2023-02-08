@@ -2,6 +2,7 @@ package com.psablik.bikemarket.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -22,6 +23,8 @@ import com.psablik.bikemarket.presentation.ui.theme.spacing
 
 @Composable
 fun BikeInListElement(
+    navigateToProduct: (String) -> Unit,
+    bikeId: String,
     bikeModelName: String,
     bikeImgPath: String,
     modifier: Modifier = Modifier
@@ -33,6 +36,7 @@ fun BikeInListElement(
     ) {
         Column(
             modifier = modifier
+                .clickable { navigateToProduct(bikeId) }
                 .fillMaxWidth()
                 .aspectRatio(1.2f)
                 .padding(MaterialTheme.spacing.s)

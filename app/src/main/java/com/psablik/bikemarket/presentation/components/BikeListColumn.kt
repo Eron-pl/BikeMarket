@@ -19,8 +19,8 @@ import com.psablik.bikemarket.presentation.ui.theme.spacing
 fun BikeListColumn(
     state: LazyListState,
     bikeList: List<Bike>,
-
-    ) {
+    onClick: (String) -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         state = state,
@@ -29,6 +29,8 @@ fun BikeListColumn(
     ) {
         items(items = bikeList, key = { it.name }) { bike ->
             BikeInListElement(
+                navigateToProduct = onClick,
+                bikeId = bike.id,
                 bikeModelName = bike.name,
                 bikeImgPath = bike.imgPath,
                 modifier = Modifier.animateItemPlacement(
