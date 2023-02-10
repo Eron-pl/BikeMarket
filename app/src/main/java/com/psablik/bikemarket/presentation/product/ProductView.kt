@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.psablik.bikemarket.presentation.components.BaseButton
 import com.psablik.bikemarket.presentation.components.ProgressIndicator
@@ -32,10 +33,21 @@ import com.psablik.bikemarket.utils.LaunchOnce
 @Composable
 fun ProductView(
     productId: String,
-    viewModel: ProductViewModel = hiltViewModel()
+    viewModel: ProductViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     LaunchedEffect(LaunchOnce) {
         viewModel.init(productId)
+    }
+
+    LaunchedEffect(LaunchOnce) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is ProductEvent.BoughtProduct -> {
+                    viewModel.navigateToPayment(navController)
+                }
+            }
+        }
     }
 
     val state = viewModel.state
@@ -63,11 +75,11 @@ fun ProductView(
         Spacer(Modifier.height(MaterialTheme.spacing.s))
 
         Column(modifier = Modifier.align(Alignment.BottomCenter)) {
-            BuyButtonSection(onClick = { })
+            BuyButtonSection(onClick = {
+                viewModel.buyProduct()
+            })
         }
     }
-
-
 }
 
 @Composable

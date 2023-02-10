@@ -1,7 +1,9 @@
 package com.psablik.bikemarket.navigation
 
 import androidx.annotation.DrawableRes
-import androidx.navigation.*
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 sealed class Screen(
     @DrawableRes var iconId: Int? = null,
@@ -18,7 +20,14 @@ sealed class Screen(
         route = "route_product?productId=$PRODUCT_ID_ARG_KEY",
         arguments = listOf(
             navArgument("productId") { type = NavType.StringType }
-        ))
+        )
+    )
+    object Payment : Screen(
+        route = "route_payment?productId=$PRODUCT_ID_ARG_KEY",
+        arguments = listOf(
+            navArgument("productId") { type = NavType.StringType }
+        )
+    )
 
     companion object {
         const val PRODUCT_ID_ARG_KEY = "{productId}"
