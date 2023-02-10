@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.psablik.bikemarket.R
 import com.psablik.bikemarket.navigation.Screen
-import com.psablik.bikemarket.presentation.ui.theme.B5
+import com.psablik.bikemarket.presentation.ui.theme.B4
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Variant
 
@@ -64,7 +64,7 @@ fun TopBar(
 
             Text(
                 text = "BikeMarket",
-                style = B5,
+                style = B4,
                 color = Variant,
                 modifier = Modifier.align(Alignment.Center)
             )

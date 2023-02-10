@@ -54,7 +54,9 @@ fun MainScreen() {
     navController.addOnDestinationChangedListener { _, destination, _ ->
         shouldShowBackButton =
             destination.route == Screen.Settings.route ||
-                    destination.route == Screen.Product.route // Todo: Pass to VM -> state -> UI
+                    destination.route == Screen.Product.route ||
+                    destination.route == Screen.Payment.route // Todo: Pass to VM -> state -> UI
+
         shouldShowBottomNavAndTopBar =
             destination.route != Screen.Login.route
     }

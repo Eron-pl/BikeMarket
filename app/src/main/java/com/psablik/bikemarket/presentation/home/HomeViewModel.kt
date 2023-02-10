@@ -6,16 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.psablik.bikemarket.domain.usecase.GetBikeListUseCase
 import com.psablik.bikemarket.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -30,8 +28,6 @@ class HomeViewModel @Inject constructor(
 
         viewModelScope.launch(IO) {
             val bikes = getBikes()
-
-            delay(2000L) // Todo
 
             withContext(Main) {
                 state = try {
