@@ -10,6 +10,8 @@ import com.psablik.bikemarket.repository.authentication.AuthenticationRepository
 import com.psablik.bikemarket.repository.authentication.RealAuthenticationRepository
 import com.psablik.bikemarket.repository.bikes.BikesRepository
 import com.psablik.bikemarket.repository.bikes.RealBikesRepository
+import com.psablik.bikemarket.repository.orders.OrdersRepository
+import com.psablik.bikemarket.repository.orders.RealOrdersRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +21,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-
     @Provides
     @Singleton
     fun localAuthRepository(
@@ -44,4 +45,11 @@ object RepositoryModule {
         bikeMapper = bikeMapper
     )
 
+    @Provides
+    @Singleton
+    fun ordersRepository(
+        firestoreDataSource: FirestoreDataSource
+    ): OrdersRepository = RealOrdersRepository(
+        firestoreDataSource = firestoreDataSource
+    )
 }
