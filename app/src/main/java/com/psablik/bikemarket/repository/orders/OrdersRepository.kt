@@ -4,5 +4,5 @@ interface OrdersRepository {
     suspend fun addNewOrder(
         userId: String,
         bikeId: String
-    )
+    ): Boolean
 }

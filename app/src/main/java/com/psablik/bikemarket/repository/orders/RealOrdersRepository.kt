@@ -8,20 +8,22 @@ import javax.inject.Inject
 class RealOrdersRepository @Inject constructor(
     private val firestoreDataSource: FirestoreDataSource
 ) : OrdersRepository {
-    override suspend fun addNewOrder(userId: String, bikeId: String) {
+    override suspend fun addNewOrder(userId: String, bikeId: String): Boolean {
         var orderId = generateRandomId()
 
         with(firestoreDataSource) {
             while (checkIfOrderIdExists(orderId)) {
                 orderId = generateRandomId()
             }
-            addNewOrder(
+            val orderAdded = addNewOrder(
                 userId = userId,
                 bikeId = bikeId,
                 orderId = orderId,
                 orderStatus = OrderStatus.PREPARING.name
             )
-            assignOrderToUser(orderId = orderId, userId = userId)
+            val orderAssignedToUser = assignOrderToUser(orderId = orderId, userId = userId)
+
+            return orderAdded.isSuccess && orderAssignedToUser.isSuccess
         }
     }
 }
