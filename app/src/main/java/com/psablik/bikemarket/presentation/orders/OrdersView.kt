@@ -10,11 +10,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.psablik.bikemarket.domain.model.Order
+import com.psablik.bikemarket.presentation.components.OrderUser
 import com.psablik.bikemarket.presentation.components.ProgressIndicator
 import com.psablik.bikemarket.presentation.ui.theme.H2
+import com.psablik.bikemarket.presentation.ui.theme.Info
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Variant
 
@@ -24,20 +28,28 @@ fun OrdersView(
 ) {
     val state = viewModel.state
 
-
-    Column(Modifier.fillMaxWidth()) {
+    Column(
+        Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Spacer(Modifier.height(MaterialTheme.spacing.m))
 
         TitleSection()
-
-        Spacer(Modifier.height(MaterialTheme.spacing.m))
 
         if (state is OrdersViewState.Loading) {
             ProgressIndicator()
         }
 
         if (state is OrdersViewState.Loaded) {
-            OrdersSection(orders = state.orders)
+            if (state.orders.isEmpty()) {
+                Text(
+                    text = "You don't have any orders", // Todo: Strings
+                    style = Info,
+                    color = Color.Gray,
+                )
+            } else {
+                OrdersSection(orders = state.orders)
+            }
         }
     }
 
@@ -51,18 +63,16 @@ fun TitleSection() {
         color = Variant,
         modifier = Modifier.padding(start = MaterialTheme.spacing.m)
     )
-
-    Spacer(Modifier.height(MaterialTheme.spacing.xs))
 }
 
 @Composable
 fun OrdersSection(orders: List<Order>) {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.padding(top = MaterialTheme.spacing.m)
+    ) {
         items(orders) { order ->
-            if (orders.isEmpty()) {
-                Text(text = "You don't have any orders")
-            } else {
-                Text(text = order.bike.name)
+            with(order) {
+                OrderUser(imgPath = bike.imgPath, name = bike.name, status = status)
             }
         }
     }
