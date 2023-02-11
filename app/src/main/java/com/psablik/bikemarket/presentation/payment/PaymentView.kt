@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.psablik.bikemarket.navigation.Screen
 import com.psablik.bikemarket.presentation.components.BaseButton
 import com.psablik.bikemarket.presentation.components.BikeInBasket
+import com.psablik.bikemarket.presentation.components.ProgressIndicator
 import com.psablik.bikemarket.presentation.ui.theme.B4
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Primary
@@ -64,8 +65,13 @@ fun PaymentView(
             }
         }
 
+        if (state is PaymentViewState.Loading) {
+            ProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
+
         Row(modifier = Modifier.align(Alignment.BottomCenter)) {
             BaseButton(
+                enabled = if (state is PaymentViewState.Loaded) state.isPayButtonEnabled else false,
                 onClick = { viewModel.payAndPlaceOrder() },
                 backgroundColor = Primary,
                 modifier = Modifier
