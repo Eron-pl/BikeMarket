@@ -14,3 +14,8 @@ val Primary = Color(0xFFCF152F)
 val PrimaryDisabled = Color(0xFFA00D21)
 val Variant = Color(0xFF2C2C2C)
 val Background = Color(0xFFFAFAFA)
+
+val statusPreparing = Color(0xFF2B81BB)
+val statusPreparedForSending = Color(0xFFCA6B16)
+val statusSent = Color(0xFF31BE25)
+val statusCompleted = Color(0xFF348313)
