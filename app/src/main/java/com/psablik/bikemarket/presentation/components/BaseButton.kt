@@ -12,7 +12,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -26,6 +25,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.psablik.bikemarket.presentation.ui.theme.LightGray
 import com.psablik.bikemarket.presentation.ui.theme.spacing
+import com.psablik.bikemarket.ui.theme.PrimaryDisabled
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -39,7 +39,7 @@ fun BaseButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         backgroundColor = backgroundColor,
         contentColor = MaterialTheme.colors.onSurface,
-        disabledBackgroundColor = MaterialTheme.colors.secondary,
+        disabledBackgroundColor = PrimaryDisabled,
         disabledContentColor = MaterialTheme.colors.onSurface
     ),
     content: @Composable RowScope.() -> Unit

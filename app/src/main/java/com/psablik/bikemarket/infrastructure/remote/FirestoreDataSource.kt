@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.psablik.bikemarket.domain.error.LoadingDataFromFirestoreException
 import com.psablik.bikemarket.domain.error.WrongBikeIdException
 import com.psablik.bikemarket.infrastructure.model.BikeResponse
+import com.psablik.bikemarket.infrastructure.model.UserResponse
 import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
 
@@ -79,6 +80,47 @@ class FirestoreDataSource @Inject constructor(
             .await()
             .exists()
 
+    @Suppress("UNCHECKED_CAST")
+    suspend fun getUserOrdersIds(userId: String): List<String> =
+        firestore.collection(COLLECTION_USERS_KEY)
+            .document(userId)
+            .get()
+            .await()
+            .get(FIELD_USER_ORDERS_KEY) as List<String>
+
+    suspend fun getBikeByOrderId(orderId: String): BikeResponse {
+        val bikeId = firestore.collection(COLLECTION_ORDERS_KEY)
+            .document(orderId)
+            .get()
+            .await()
+            .getString(FIELD_BIKE_ID_KEY)
+
+        return bikeId?.let { getBike(it) } ?: BikeResponse()
+    }
+
+    suspend fun getUserByOrderId(orderId: String): UserResponse {
+        val userId = firestore.collection(COLLECTION_ORDERS_KEY)
+            .document(orderId)
+            .get()
+            .await()
+            .getString(FIELD_BIKE_ID_KEY)
+
+        return userId?.let { getUser(it) } ?: UserResponse()
+    }
+
+    suspend fun getUser(userId: String): UserResponse? =
+        firestore.collection(COLLECTION_USERS_KEY)
+            .document(userId)
+            .get()
+            .await()
+            .toObject(UserResponse::class.java)
+
+    suspend fun getOrderStatus(orderId: String): String =
+        firestore.collection(COLLECTION_ORDERS_KEY)
+            .document(orderId)
+            .get()
+            .await()
+            .getString(FIELD_ORDER_STATUS_KEY) ?: "ERROR"
 
     companion object {
         private const val COLLECTION_BIKES_KEY = "Bikes"

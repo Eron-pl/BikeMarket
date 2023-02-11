@@ -56,11 +56,29 @@ class PaymentViewModel @Inject constructor(
 
     fun payAndPlaceOrder() {
         viewModelScope.launch(IO) {
-           if (buyProduct(productId)) {
-               _event.emit(PaymentEvent.PaidAndPlacedOrder)
-           } else {
-               _event.emit(PaymentEvent.PaymentFailed)
-           }
+            disablePayButton()
+            if (buyProduct(productId)) {
+                _event.emit(PaymentEvent.PaidAndPlacedOrder)
+            } else {
+                _event.emit(PaymentEvent.PaymentFailed)
+            }
+            enablePayButton()
+        }
+    }
+
+    suspend fun enablePayButton() {
+        withContext(Main) {
+            (state as? PaymentViewState.Loaded)?.let { oldState ->
+                state = oldState.copy(isPayButtonEnabled = true)
+            }
+        }
+    }
+
+    suspend fun disablePayButton() {
+        withContext(Main) {
+            (state as? PaymentViewState.Loaded)?.let { oldState ->
+                state = oldState.copy(isPayButtonEnabled = false)
+            }
         }
     }
 }

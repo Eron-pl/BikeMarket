@@ -48,8 +48,12 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun ordersRepository(
-        firestoreDataSource: FirestoreDataSource
+        firestoreDataSource: FirestoreDataSource,
+        bikeMapper: BikeMapper,
+        userMapper: UserMapper
     ): OrdersRepository = RealOrdersRepository(
-        firestoreDataSource = firestoreDataSource
+        firestoreDataSource = firestoreDataSource,
+        userMapper = userMapper,
+        bikeMapper = bikeMapper
     )
 }

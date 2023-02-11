@@ -3,6 +3,7 @@ package com.psablik.bikemarket.di
 import com.psablik.bikemarket.mapper.domain.BikeMapper
 import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
 import com.psablik.bikemarket.mapper.domain.UserMapper
+import com.psablik.bikemarket.mapper.view.StatusOnViewMapper
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -24,5 +25,9 @@ object MapperModule {
     @Provides
     @Reusable
     fun bikeMapper(): BikeMapper = BikeMapper()
+
+    @Provides
+    @Reusable
+    fun statusOnViewMapper(): StatusOnViewMapper = StatusOnViewMapper()
 
 }
