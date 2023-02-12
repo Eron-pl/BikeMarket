@@ -122,6 +122,13 @@ class FirestoreDataSource @Inject constructor(
             .await()
             .getString(FIELD_ORDER_STATUS_KEY) ?: "ERROR"
 
+    suspend fun getCurrentUserType(userId: String): String =
+        firestore.collection(COLLECTION_USERS_KEY)
+            .document(userId)
+            .get()
+            .await()
+            .getString(FIELD_USER_TYPE_KEY) ?: ""
+
     companion object {
         private const val COLLECTION_BIKES_KEY = "Bikes"
         private const val COLLECTION_ORDERS_KEY = "Orders"
@@ -130,5 +137,6 @@ class FirestoreDataSource @Inject constructor(
         private const val FIELD_ORDER_STATUS_KEY = "status"
         private const val FIELD_USER_ID_KEY = "userId"
         private const val FIELD_USER_ORDERS_KEY = "orders"
+        private const val FIELD_USER_TYPE_KEY = "type"
     }
 }

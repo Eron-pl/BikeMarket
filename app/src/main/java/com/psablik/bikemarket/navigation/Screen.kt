@@ -16,6 +16,7 @@ sealed class Screen(
     object Login : Screen(route = "route_login")
     object Settings : Screen(route = "route_settings")
     object Home : Screen(route = "route_home")
+    object AdminPanel : Screen(route = "route_admin_panel")
     object Product : Screen(
         route = "route_product?productId=$PRODUCT_ID_ARG_KEY",
         arguments = listOf(

@@ -6,6 +6,7 @@ import com.psablik.bikemarket.infrastructure.remote.RemoteAuthenticationDataSour
 import com.psablik.bikemarket.mapper.domain.BikeMapper
 import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
 import com.psablik.bikemarket.mapper.domain.UserMapper
+import com.psablik.bikemarket.mapper.domain.UserTypeMapper
 import com.psablik.bikemarket.repository.authentication.AuthenticationRepository
 import com.psablik.bikemarket.repository.authentication.RealAuthenticationRepository
 import com.psablik.bikemarket.repository.bikes.BikesRepository
@@ -26,13 +27,17 @@ object RepositoryModule {
     fun localAuthRepository(
         localDataSource: LocalAuthenticationDataSource,
         remoteDataSource: RemoteAuthenticationDataSource,
+        firestoreDataSource: FirestoreDataSource,
         userMapper: UserMapper,
-        loggedStatusMapper: LoggedStatusMapper
+        loggedStatusMapper: LoggedStatusMapper,
+        userTypeMapper: UserTypeMapper
     ): AuthenticationRepository = RealAuthenticationRepository(
         localDataSource = localDataSource,
         remoteDataSource = remoteDataSource,
+        firestoreDataSource = firestoreDataSource,
         userMapper = userMapper,
-        loggedStatusMapper = loggedStatusMapper
+        loggedStatusMapper = loggedStatusMapper,
+        userTypeMapper = userTypeMapper
     )
 
     @Provides

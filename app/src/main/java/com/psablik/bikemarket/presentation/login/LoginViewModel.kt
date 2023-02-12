@@ -11,16 +11,17 @@ import com.google.firebase.auth.AuthCredential
 import com.psablik.bikemarket.domain.model.LoggedStatus
 import com.psablik.bikemarket.domain.usecase.GetCredentialFromAccountUseCase
 import com.psablik.bikemarket.domain.usecase.GetLoggedInStatusUseCase
+import com.psablik.bikemarket.domain.usecase.GetUserTypeUseCase
 import com.psablik.bikemarket.domain.usecase.SetLoggedInStatusUseCase
 import com.psablik.bikemarket.domain.usecase.SignInWithCredentialUseCase
-import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
+import com.psablik.bikemarket.mapper.domain.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -29,7 +30,7 @@ class LoginViewModel @Inject constructor(
     private val signInWithCredential: SignInWithCredentialUseCase,
     private val getLoggedInStatus: GetLoggedInStatusUseCase,
     private val setLoggedStatus: SetLoggedInStatusUseCase,
-    private val loggedStatusMapper: LoggedStatusMapper
+    private val getUserType: GetUserTypeUseCase
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<LoginEvent>()
@@ -37,10 +38,11 @@ class LoginViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (loggedStatusMapper(getLoggedInStatus()) == LoggedStatus.LOGGED_IN) {
-                _event.emit(
-                    LoginEvent.LoggedIn
-                )
+            if (getLoggedInStatus() == LoggedStatus.LOGGED_IN) {
+                when (getUserType()) {
+                    UserType.USER -> _event.emit(LoginEvent.LoggedInUser)
+                    UserType.ADMIN -> _event.emit(LoginEvent.LoggedInAdmin)
+                }
             }
         }
     }
@@ -61,9 +63,10 @@ class LoginViewModel @Inject constructor(
             try {
                 if(signInWithCredential(credential = credential).isSuccess) {
                     setLoggedStatus(LoggedStatus.LOGGED_IN)
-                    _event.emit(
-                        LoginEvent.LoggedIn
-                    )
+                    when (getUserType()) {
+                        UserType.USER -> _event.emit(LoginEvent.LoggedInUser)
+                        UserType.ADMIN -> _event.emit(LoginEvent.LoggedInAdmin)
+                    }
                 }
             } catch (e: Exception) {
                 Timber.e(e.message)

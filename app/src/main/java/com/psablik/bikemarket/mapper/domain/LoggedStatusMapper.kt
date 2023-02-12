@@ -10,9 +10,9 @@ class LoggedStatusMapper @Inject constructor() {
             LoggedStatus.NOT_LOGGED_IN -> false
         }
 
-    operator fun invoke(status: Boolean): LoggedStatus =
+    operator fun invoke(status: Boolean?): LoggedStatus =
         when (status) {
             true -> LoggedStatus.LOGGED_IN
-            false -> LoggedStatus.NOT_LOGGED_IN
+            else -> LoggedStatus.NOT_LOGGED_IN
         }
     }

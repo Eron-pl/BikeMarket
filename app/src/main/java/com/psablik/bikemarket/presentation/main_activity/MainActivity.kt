@@ -1,4 +1,4 @@
-package com.psablik.bikemarket.presentation
+package com.psablik.bikemarket.presentation.main_activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
