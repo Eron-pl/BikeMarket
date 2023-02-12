@@ -2,7 +2,9 @@ package com.psablik.bikemarket.di
 
 import com.psablik.bikemarket.mapper.domain.BikeMapper
 import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
+import com.psablik.bikemarket.mapper.domain.OrderStatusMapper
 import com.psablik.bikemarket.mapper.domain.UserMapper
+import com.psablik.bikemarket.mapper.domain.UserTypeMapper
 import com.psablik.bikemarket.mapper.view.StatusOnViewMapper
 import dagger.Module
 import dagger.Provides
@@ -13,7 +15,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object MapperModule {
-
     @Provides
     @Reusable
     fun loggedStatusMapper(): LoggedStatusMapper = LoggedStatusMapper()
@@ -28,6 +29,13 @@ object MapperModule {
 
     @Provides
     @Reusable
-    fun statusOnViewMapper(): StatusOnViewMapper = StatusOnViewMapper()
+    fun orderStatusOnViewMapper(): StatusOnViewMapper = StatusOnViewMapper()
 
+    @Provides
+    @Reusable
+    fun userTypeMapper(): UserTypeMapper = UserTypeMapper()
+
+    @Provides
+    @Reusable
+    fun orderStatusMapper(): OrderStatusMapper = OrderStatusMapper()
 }

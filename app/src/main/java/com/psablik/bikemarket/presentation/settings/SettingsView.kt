@@ -1,6 +1,7 @@
 package com.psablik.bikemarket.presentation.settings
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -35,14 +37,19 @@ fun SettingsView(
         }
     }
 
-    Column(verticalArrangement = Arrangement.SpaceBetween) {
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.m))
-
-        TitleSection()
-
-        LogoutButton(onClick = { viewModel.logOut() })
+    Box {
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.align(Alignment.TopCenter)
+        ) {
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.m))
+            TitleSection()
+        }
+        LogoutButton(
+            onClick = { viewModel.logOut() },
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
-
 }
 
 @Composable
@@ -58,10 +65,10 @@ fun TitleSection() {
 }
 
 @Composable
-fun LogoutButton(onClick: () -> Unit) {
+fun LogoutButton(onClick: () -> Unit, modifier: Modifier) {
     BaseButton(
         onClick = onClick,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(MaterialTheme.spacing.m)
     ) {

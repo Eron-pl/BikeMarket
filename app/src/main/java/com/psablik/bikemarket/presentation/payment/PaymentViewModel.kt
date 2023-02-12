@@ -66,7 +66,7 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    suspend fun enablePayButton() {
+    private suspend fun enablePayButton() {
         withContext(Main) {
             (state as? PaymentViewState.Loaded)?.let { oldState ->
                 state = oldState.copy(isPayButtonEnabled = true)
@@ -74,7 +74,7 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    suspend fun disablePayButton() {
+    private suspend fun disablePayButton() {
         withContext(Main) {
             (state as? PaymentViewState.Loaded)?.let { oldState ->
                 state = oldState.copy(isPayButtonEnabled = false)

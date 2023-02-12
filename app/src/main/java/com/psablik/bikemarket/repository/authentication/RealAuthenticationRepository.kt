@@ -4,16 +4,21 @@ import com.google.firebase.auth.AuthCredential
 import com.psablik.bikemarket.domain.model.LoggedStatus
 import com.psablik.bikemarket.domain.model.User
 import com.psablik.bikemarket.infrastructure.local.LocalAuthenticationDataSource
+import com.psablik.bikemarket.infrastructure.remote.FirestoreDataSource
 import com.psablik.bikemarket.infrastructure.remote.RemoteAuthenticationDataSource
 import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
 import com.psablik.bikemarket.mapper.domain.UserMapper
-import kotlinx.coroutines.flow.first
+import com.psablik.bikemarket.mapper.domain.UserType
+import com.psablik.bikemarket.mapper.domain.UserTypeMapper
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 
 class RealAuthenticationRepository @Inject constructor(
     private val localDataSource: LocalAuthenticationDataSource,
     private val remoteDataSource: RemoteAuthenticationDataSource,
+    private val firestoreDataSource: FirestoreDataSource,
     private val loggedStatusMapper: LoggedStatusMapper,
+    private val userTypeMapper: UserTypeMapper,
     private val userMapper: UserMapper
 ) : AuthenticationRepository {
 
@@ -27,8 +32,8 @@ class RealAuthenticationRepository @Inject constructor(
             userMapper(firebaseUser)
         }
 
-    override suspend fun getLoggedInStatus(): Boolean =
-        localDataSource.getLoggedStatus().first() ?: NOT_LOGGED_IN
+    override suspend fun getLoggedInStatus(): LoggedStatus =
+        loggedStatusMapper(localDataSource.getLoggedStatus().first())
 
     override suspend fun clearLoggedInStatus() {
         localDataSource.clearLoggedStatus()
@@ -38,7 +43,13 @@ class RealAuthenticationRepository @Inject constructor(
         localDataSource.setLoggedStatus(loggedStatusMapper(status))
     }
 
-    companion object {
-        private const val NOT_LOGGED_IN = false
+    override suspend fun getCurrentUserType(userId: String): UserType =
+        userTypeMapper(firestoreDataSource.getCurrentUserType(userId))
+
+    override suspend fun checkIfUserExists(): Boolean =
+       remoteDataSource.checkIfUserExists()
+
+    override suspend fun addNewUser() {
+        remoteDataSource.addUserToFirestore()
     }
 }

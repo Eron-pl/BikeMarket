@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.psablik.bikemarket.R
+import com.psablik.bikemarket.presentation.admin_panel.AdminPanelView
 import com.psablik.bikemarket.presentation.home.HomeView
 import com.psablik.bikemarket.presentation.login.LoginView
 import com.psablik.bikemarket.presentation.orders.OrdersView
@@ -97,6 +98,13 @@ fun Navigation(
             productId?.let {
                 PaymentView(productId = it, navController = navController)
             }
+        }
+
+        // Admin panel
+        composable(
+            route = Screen.AdminPanel.route
+        ) {
+            AdminPanelView()
         }
     }
 }

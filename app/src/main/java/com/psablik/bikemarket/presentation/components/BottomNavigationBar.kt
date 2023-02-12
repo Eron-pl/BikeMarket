@@ -16,12 +16,9 @@ import com.psablik.bikemarket.navigation.Screen
 
 @Composable
 fun BottomNavigationBar(
-    navController: NavController
+    navController: NavController,
 ) {
-    val screenList = listOf(
-        Screen.Home,
-        Screen.Orders,
-    )
+    val screenList = listOf(Screen.Home, Screen.Orders)
 
     BottomNavigation(
         backgroundColor = Color.White,
@@ -35,13 +32,15 @@ fun BottomNavigationBar(
             if (screen.iconId != null && screen.title != null) {
                 BottomNavigationItem(
                     selected = isSelected,
-                    onClick = { navController.navigate(screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
-                    } },
+                    },
                     selectedContentColor = Color.Red, // Todo: check why material theme not working
                     icon = {
                         Icon(

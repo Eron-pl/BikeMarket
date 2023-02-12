@@ -40,9 +40,14 @@ fun LoginView(
     LaunchedEffect(LaunchOnce) {
         viewModel.event.collect { event ->
             when (event) {
-                is LoginEvent.LoggedIn -> navController.navigate(Screen.Home.route) {
+                is LoginEvent.LoggedInUser -> navController.navigate(Screen.Home.route) {
                     popUpTo(Screen.Login.route) {
-                        inclusive= true
+                        inclusive = true
+                    }
+                }
+                is LoginEvent.LoggedInAdmin -> navController.navigate(Screen.AdminPanel.route) {
+                    popUpTo(Screen.Login.route) {
+                        inclusive = true
                     }
                 }
             }

@@ -5,9 +5,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.psablik.bikemarket.domain.error.LoadingDataFromFirestoreException
 import com.psablik.bikemarket.domain.error.WrongBikeIdException
 import com.psablik.bikemarket.infrastructure.model.BikeResponse
+import com.psablik.bikemarket.infrastructure.model.OrderResponse
 import com.psablik.bikemarket.infrastructure.model.UserResponse
 import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 class FirestoreDataSource @Inject constructor(
     private val firestore: FirebaseFirestore,
@@ -47,6 +49,7 @@ class FirestoreDataSource @Inject constructor(
                 .set(
                     mapOf(
                         FIELD_BIKE_ID_KEY to bikeId,
+                        FIELD_ORDER_ID_KEY to orderId,
                         FIELD_ORDER_STATUS_KEY to orderStatus,
                         FIELD_USER_ID_KEY to userId
                     )
@@ -82,11 +85,17 @@ class FirestoreDataSource @Inject constructor(
 
     @Suppress("UNCHECKED_CAST")
     suspend fun getUserOrdersIds(userId: String): List<String> =
-        firestore.collection(COLLECTION_USERS_KEY)
-            .document(userId)
-            .get()
-            .await()
-            .get(FIELD_USER_ORDERS_KEY) as List<String>
+        try {
+            firestore.collection(COLLECTION_USERS_KEY)
+                .document(userId)
+                .get()
+                .await()
+                .get(FIELD_USER_ORDERS_KEY) as List<String>
+        } catch (e: Exception) {
+            Timber.e("Fire: ${e.message}")
+            emptyList()
+        }
+
 
     suspend fun getBikeByOrderId(orderId: String): BikeResponse {
         val bikeId = firestore.collection(COLLECTION_ORDERS_KEY)
@@ -103,9 +112,11 @@ class FirestoreDataSource @Inject constructor(
             .document(orderId)
             .get()
             .await()
-            .getString(FIELD_BIKE_ID_KEY)
+            .getString(FIELD_USER_ID_KEY)
 
-        return userId?.let { getUser(it) } ?: UserResponse()
+        val u = userId?.let { getUser(it) } ?: UserResponse()
+
+        return u
     }
 
     suspend fun getUser(userId: String): UserResponse? =
@@ -122,6 +133,37 @@ class FirestoreDataSource @Inject constructor(
             .await()
             .getString(FIELD_ORDER_STATUS_KEY) ?: "ERROR"
 
+    suspend fun getCurrentUserType(userId: String): String =
+        firestore.collection(COLLECTION_USERS_KEY)
+            .document(userId)
+            .get()
+            .await()
+            .getString(FIELD_USER_TYPE_KEY) ?: ""
+
+    suspend fun getOrders(): List<OrderResponse> =
+        try {
+            firestore.collection(COLLECTION_ORDERS_KEY)
+                .get()
+                .await()
+                .documents
+                .mapNotNull { it.toObject(OrderResponse::class.java) }
+        } catch (e: Exception) {
+            throw LoadingDataFromFirestoreException("Error while loading order list from firestore")
+        }
+
+    suspend fun changeOrderStatus(orderId: String, status: String): Result<Unit> =
+        try {
+            firestore.collection(COLLECTION_ORDERS_KEY)
+                .document(orderId)
+                .update(FIELD_ORDER_STATUS_KEY, status)
+                .await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Timber.e(e.message)
+            Result.failure(e)
+        }
+
+
     companion object {
         private const val COLLECTION_BIKES_KEY = "Bikes"
         private const val COLLECTION_ORDERS_KEY = "Orders"
@@ -130,5 +172,7 @@ class FirestoreDataSource @Inject constructor(
         private const val FIELD_ORDER_STATUS_KEY = "status"
         private const val FIELD_USER_ID_KEY = "userId"
         private const val FIELD_USER_ORDERS_KEY = "orders"
+        private const val FIELD_USER_TYPE_KEY = "type"
+        private const val FIELD_ORDER_ID_KEY = "orderId"
     }
 }
