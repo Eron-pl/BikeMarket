@@ -2,6 +2,7 @@ package com.psablik.bikemarket.di
 
 import com.psablik.bikemarket.mapper.domain.BikeMapper
 import com.psablik.bikemarket.mapper.domain.LoggedStatusMapper
+import com.psablik.bikemarket.mapper.domain.OrderStatusMapper
 import com.psablik.bikemarket.mapper.domain.UserMapper
 import com.psablik.bikemarket.mapper.domain.UserTypeMapper
 import com.psablik.bikemarket.mapper.view.StatusOnViewMapper
@@ -28,9 +29,13 @@ object MapperModule {
 
     @Provides
     @Reusable
-    fun statusOnViewMapper(): StatusOnViewMapper = StatusOnViewMapper()
+    fun orderStatusOnViewMapper(): StatusOnViewMapper = StatusOnViewMapper()
 
     @Provides
     @Reusable
     fun userTypeMapper(): UserTypeMapper = UserTypeMapper()
+
+    @Provides
+    @Reusable
+    fun orderStatusMapper(): OrderStatusMapper = OrderStatusMapper()
 }

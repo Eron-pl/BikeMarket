@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.psablik.bikemarket.navigation.Navigation
 import com.psablik.bikemarket.navigation.Screen
@@ -39,7 +40,11 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    viewModel: MainActivityViewModel = hiltViewModel()
+) {
+    val state = viewModel.state
+
     val navController = rememberAnimatedNavController()
     val currentDestination = navController.currentBackStackEntry?.destination?.route
 
@@ -47,8 +52,13 @@ fun MainScreen() {
         mutableStateOf(currentDestination == Screen.Settings.route)
     }
 
-    var shouldShowBottomNavAndTopBar by remember { // Todo: Export to state
+    var shouldShowTopBar by remember { // Todo: Export to state
         mutableStateOf(currentDestination != Screen.Login.route)
+    }
+
+    var shouldShowBottomNav by remember { // Todo: Export to state
+        mutableStateOf(currentDestination != Screen.Login.route &&
+                currentDestination != Screen.AdminPanel.route)
     }
 
     navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -57,8 +67,11 @@ fun MainScreen() {
                     destination.route == Screen.Product.route ||
                     destination.route == Screen.Payment.route // Todo: Pass to VM -> state -> UI
 
-        shouldShowBottomNavAndTopBar =
-            destination.route != Screen.Login.route
+        shouldShowTopBar = destination.route != Screen.Login.route
+
+        shouldShowBottomNav =
+            destination.route != Screen.Login.route &&
+                    destination.route != Screen.AdminPanel.route
     }
 
     Column(
@@ -66,7 +79,7 @@ fun MainScreen() {
             .fillMaxSize()
             .background(color = Background)
     ) {
-        if (shouldShowBottomNavAndTopBar) {
+        if (shouldShowTopBar) {
             TopBar(
                 navController = navController,
                 shouldShowBackButton = shouldShowBackButton
@@ -79,7 +92,7 @@ fun MainScreen() {
             navController = navController
         )
 
-        if (shouldShowBottomNavAndTopBar) {
+        if (shouldShowBottomNav) {
             Surface(elevation = MaterialTheme.spacing.s) {
                 BottomNavigationBar(
                     navController = navController

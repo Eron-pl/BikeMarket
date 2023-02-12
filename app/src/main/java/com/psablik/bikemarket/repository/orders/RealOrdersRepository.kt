@@ -34,17 +34,28 @@ class RealOrdersRepository @Inject constructor(
 
     override suspend fun getUserOrders(userId: String): List<Order> {
         val ordersIds = firestoreDataSource.getUserOrdersIds(userId)
-        val orders = mutableListOf<Order>().apply {
-            ordersIds.forEach { order ->
-                add(
-                    Order(
-                        bike = bikeMapper(firestoreDataSource.getBikeByOrderId(order)),
-                        status = firestoreDataSource.getOrderStatus(order),
-                        user = userMapper(firestoreDataSource.getUserByOrderId(order))
-                    )
-                )
-            }
+        return ordersIds.map { order ->
+            Order(
+                id = order,
+                bike = bikeMapper(firestoreDataSource.getBikeByOrderId(order)),
+                status = firestoreDataSource.getOrderStatus(order),
+                user = userMapper(firestoreDataSource.getUserByOrderId(order))
+            )
         }
-        return orders
     }
+
+    override suspend fun getOrders(): List<Order> {
+        val orders = firestoreDataSource.getOrders()
+        return orders.map { order ->
+            Order(
+                id = order.orderId!!,
+                bike = bikeMapper(firestoreDataSource.getBikeByOrderId(order.orderId)),
+                status = firestoreDataSource.getOrderStatus(order.orderId),
+                user = userMapper(firestoreDataSource.getUserByOrderId(order.orderId))
+            )
+        }
+    }
+
+    override suspend fun changeOrderStatus(orderId: String, status: OrderStatus): Boolean =
+        firestoreDataSource.changeOrderStatus(orderId = orderId, status = status.name).isSuccess
 }

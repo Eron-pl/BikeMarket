@@ -9,6 +9,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthCredential
 import com.psablik.bikemarket.domain.model.LoggedStatus
+import com.psablik.bikemarket.domain.usecase.AddNewUserUseCase
+import com.psablik.bikemarket.domain.usecase.CheckIfUserExistsUseCase
 import com.psablik.bikemarket.domain.usecase.GetCredentialFromAccountUseCase
 import com.psablik.bikemarket.domain.usecase.GetLoggedInStatusUseCase
 import com.psablik.bikemarket.domain.usecase.GetUserTypeUseCase
@@ -30,7 +32,9 @@ class LoginViewModel @Inject constructor(
     private val signInWithCredential: SignInWithCredentialUseCase,
     private val getLoggedInStatus: GetLoggedInStatusUseCase,
     private val setLoggedStatus: SetLoggedInStatusUseCase,
-    private val getUserType: GetUserTypeUseCase
+    private val getUserType: GetUserTypeUseCase,
+    private val checkIfUserExists: CheckIfUserExistsUseCase,
+    private val addNewUser: AddNewUserUseCase
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<LoginEvent>()
@@ -63,6 +67,11 @@ class LoginViewModel @Inject constructor(
             try {
                 if(signInWithCredential(credential = credential).isSuccess) {
                     setLoggedStatus(LoggedStatus.LOGGED_IN)
+
+                    if(!checkIfUserExists()) {
+                        addNewUser()
+                    }
+
                     when (getUserType()) {
                         UserType.USER -> _event.emit(LoginEvent.LoggedInUser)
                         UserType.ADMIN -> _event.emit(LoginEvent.LoggedInAdmin)

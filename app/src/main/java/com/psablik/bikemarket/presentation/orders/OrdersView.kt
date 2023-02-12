@@ -17,8 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.psablik.bikemarket.domain.model.Order
 import com.psablik.bikemarket.presentation.components.OrderUser
 import com.psablik.bikemarket.presentation.components.ProgressIndicator
+import com.psablik.bikemarket.presentation.ui.theme.B5
 import com.psablik.bikemarket.presentation.ui.theme.H2
-import com.psablik.bikemarket.presentation.ui.theme.Info
 import com.psablik.bikemarket.presentation.ui.theme.spacing
 import com.psablik.bikemarket.ui.theme.Variant
 
@@ -42,9 +42,10 @@ fun OrdersView(
 
         if (state is OrdersViewState.Loaded) {
             if (state.orders.isEmpty()) {
+                Spacer(Modifier.height(MaterialTheme.spacing.m))
                 Text(
                     text = "You don't have any orders", // Todo: Strings
-                    style = Info,
+                    style = B5,
                     color = Color.Gray,
                 )
             } else {

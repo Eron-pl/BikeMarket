@@ -82,6 +82,12 @@ val B5 = TextStyle(
     lineHeight = 24.sp
 )
 
+val B6 = TextStyle(
+    fontFamily = FontFamily(Font(R.font.montserrat_light)),
+    fontSize = 16.sp,
+    lineHeight = 32.sp
+)
+
 val Info = TextStyle(
     fontFamily = FontFamily(Font(R.font.montserrat_medium)),
     fontSize = 12.sp,

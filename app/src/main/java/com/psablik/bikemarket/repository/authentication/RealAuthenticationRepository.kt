@@ -45,4 +45,11 @@ class RealAuthenticationRepository @Inject constructor(
 
     override suspend fun getCurrentUserType(userId: String): UserType =
         userTypeMapper(firestoreDataSource.getCurrentUserType(userId))
+
+    override suspend fun checkIfUserExists(): Boolean =
+       remoteDataSource.checkIfUserExists()
+
+    override suspend fun addNewUser() {
+        remoteDataSource.addUserToFirestore()
+    }
 }

@@ -13,4 +13,6 @@ interface AuthenticationRepository {
     suspend fun getLoggedInStatus(): LoggedStatus
     suspend fun setLoggedInStatus(status: LoggedStatus)
     suspend fun getCurrentUserType(userId: String): UserType
+    suspend fun checkIfUserExists(): Boolean
+    suspend fun addNewUser()
 }
